@@ -405,6 +405,9 @@ type ReserveListing @entity {
   "The originating token contract for this list"
   tokenContract: String!
 
+  "Token's exchange contract for this list"
+  exchangeContract: String!
+
   "The token ID for this list"
   tokenId: BigInt!
 
