@@ -18,9 +18,9 @@ import {
     ListingEnded,
     ListingListPriceUpdated
 } from '../types/ItemListing/ItemListing'
-import {
-  Item as ItemContract 
-} from '../types/Item/Item'
+// import {
+//   Item as ItemContract 
+// } from '../types/Item/Item'
 
 
 
@@ -40,17 +40,17 @@ export function handleReserveListingCreated(event: ListingCreated): void {
 	  let token = tokenContractAddress.concat('-').concat(tokenId)  
 	  let item = Item.load(token) 
 
-	  let itemContract = ItemContract.bind(event.params.tokenContract)
-	  let itemExchangeAddress = itemContract.itemExchangeContract()
+	  //let itemContract = ItemContract.bind(event.params.tokenContract)
+	  //let itemExchangeAddress = itemContract.itemExchangeContract()
 
     createReserveListing(
         event.params.listingId.toString(),
         event.transaction.hash.toHexString(),
         event.params.tokenId,
         event.params.tokenContract.toHexString(),
-        itemExchangeAddress.toHexString(),
+        //itemExchangeAddress.toHexString(),
         item,
-        event.params.startsAt,
+        event.params.startsAt, 
         event.params.duration,
         event.params.listPrice,
         event.params.listType,
