@@ -13,6 +13,6 @@
     "outDir": "dist"
   },
   "include": [
-    "@motivdev/asset"
+    "@motiv-foundation/asset"
   ]
 }

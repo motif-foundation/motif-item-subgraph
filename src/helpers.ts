@@ -480,7 +480,6 @@ export function createReserveListing(
     transactionHash: string,
     tokenId: BigInt,
     tokenContract: string,
-   // exchangeContract: string,
     item: Item | null,
     startsAt: BigInt,
     duration: BigInt,
@@ -497,8 +496,7 @@ export function createReserveListing(
 
     reserveListing.tokenId = tokenId
     reserveListing.transactionHash = transactionHash
-    reserveListing.tokenContract = tokenContract
-    //reserveListing.exchangeContract = exchangeContract
+    reserveListing.tokenContract = tokenContract 
     reserveListing.token = tokenContract.concat('-').concat(tokenId.toString())
     reserveListing.item = item ? item.id : null
     reserveListing.approved = false
