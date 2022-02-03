@@ -376,8 +376,8 @@ export function handleBidFinalized(event: BidFinalized): void {
     onChainBid.sellOnShare.value,
     bidder,
     recipient,
-    onChainBid.createdAtTimestamp,
-    onChainBid.createdAtBlockNumber,
+    event.block.timestamp, //onChainBid.createdAtTimestamp,
+    event.block.number,//onChainBid.createdAtBlockNumber,
     event.block.timestamp,
     event.block.number
   )
@@ -387,7 +387,7 @@ export function handleBidFinalized(event: BidFinalized): void {
   currency.liquidity = currency.liquidity.minus(onChainBid.amount)
 
 
-  
+
   currency.save()
 
   // Remove Bid
