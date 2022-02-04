@@ -388,7 +388,7 @@ export function handleBidFinalized(event: BidFinalized): void {
 
   // Update Currency Liquidity
   //currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.liquidity = currency.liquidity.minus(bid.amoun)//  onChainBid.amount
+  currency.liquidity = currency.liquidity.minus(bid.amount)//  onChainBid.amount
 
 
 
