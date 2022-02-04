@@ -333,10 +333,11 @@ export function handleBidFinalized(event: BidFinalized): void {
     log.error('Item is null for tokenId: {}', [tokenId])
   }
 
-  // let bid = Bid.load(bidId)
-  // if (bid == null) {
-  //   log.error('Bid is null for bidId: {}', [bidId])
-  // }
+  //uncomment this if necessary
+  let bid = Bid.load(bidId)
+  if (bid == null) {
+    log.error('Bid is null for bidId: {}', [bidId])
+  }
 
   let inactiveBidId = tokenId
     .concat('-')
@@ -376,15 +377,18 @@ export function handleBidFinalized(event: BidFinalized): void {
     onChainBid.sellOnShare.value,
     bidder,
     recipient,
-    event.block.timestamp, //onChainBid.createdAtTimestamp,
-    event.block.number,//onChainBid.createdAtBlockNumber,
+    bid.createdAtTimestamp,
+    bid.createdAtBlockNumber,
     event.block.timestamp,
     event.block.number
   )
 
+   // event.block.timestamp, //bid.createdAtTimestamp,
+   // event.block.number,//bid.createdAtBlockNumber,
+
   // Update Currency Liquidity
   //currency.liquidity = currency.liquidity.minus(bid.amount)
-  currency.liquidity = currency.liquidity.minus(onChainBid.amount)// bid.amount
+  currency.liquidity = currency.liquidity.minus(bid.amoun)//  onChainBid.amount
 
 
 
