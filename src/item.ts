@@ -131,7 +131,7 @@ export function handleTransfer(event: Transfer): void {
 
   let tokenContractAddress = event.address.toHexString() 
 
-   log.info(`tokenContractAddress: {}, space: {}, avatar: {}, land: {}`, [
+   log.info(`tokenContractAddress here: {}, space: {}, avatar: {}, land: {}`, [
     tokenContractAddress,
     spaceAddress,
     avatarAddress,
@@ -140,11 +140,18 @@ export function handleTransfer(event: Transfer): void {
 
 
 
-  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+/*  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
   	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId,
 	  ])
   	  return
+  }*/
+
+  if (tokenContractAddress == "0x441c2909d520dbca6f0d478d57a93a6c5b13495b") {
+  		log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
+	    tokenId
+	  ])
+  		return 
   }
 
 
