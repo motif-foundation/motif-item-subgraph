@@ -22,10 +22,10 @@ import {
 const REMOVED = 'Removed'
 const FINALIZED = 'Finalized'
 
-var avatarAddress = "0x441c2909d520dbca6f0d478d57a93a6c5b13495b";
-var spaceAddress = "0xabcb23c9ee6de4471bc4034238cd812d3b704b8c";
-var landAddress = "0x1609f4fd1e709f5210b08ae790d1f97546685975";
-
+var avatarExchangeAddress = "0x4012d7b3f1b6832da88dd8c169f9ee862beba072";
+var spaceExchangeAddress = "0xe91b2ccd931b2e8fe1da299e3f8e94f8bbdcd236";
+var landExchangeAddress = "0xf82563794243fd490b88bb7d49244f9b5150bb48";
+ 
 /**
  * Handler called when a `BidShareUpdated` Event is emitted on the Motif ItemExchange Contract
  * @param event
@@ -34,29 +34,19 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
   let tokenId = event.params.tokenId.toString()
   let bidShares = event.params.bidShares
 
-  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+  log.info(`ITEMEXCHANGE: Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
     tokenId,
     bidShares.toString(),
   ])
 
 
-  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
-  
-  log.info(`tokenContractAddress exchange: {}, space: {}, avatar: {}, land: {}`, [
-    tokenContractAddress,
-    spaceAddress,
-    avatarAddress,
-    landAddress
-  ])
-
-	 if (tokenContractAddress == "0x441c2909d520dbca6f0d478d57a93a6c5b13495b") {
-			log.info(`Found avatar exchange, space or land contract for tokenId: {} -> not proceeding`, [
+	if (event.address == "0x4012d7b3f1b6832da88dd8c169f9ee862beba072") {
+		log.info(`ITEMEXCHANGE: Found avatar exchange, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId
 	  ])
-			return 
+		return 
 	}
-
-
+ 
 
 
 /*  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
