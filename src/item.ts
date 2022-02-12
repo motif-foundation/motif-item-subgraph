@@ -126,15 +126,15 @@ export function handleTransfer(event: Transfer): void {
    // }
 
 
-   let itemContract = ItemContract.bind(event.address);
-   let tokenContractAddress = event.address.toHexString();
-   let itemExchangeAddress = itemContract.itemExchangeContract();
-   let itemIdentifier = itemContract.itemIdentifier(); 
+   // let itemContract = ItemContract.bind(event.address);
+   // let tokenContractAddress = event.address.toHexString();
+   // let itemExchangeAddress = itemContract.itemExchangeContract();
+   // let itemIdentifier = itemContract.itemIdentifier(); 
 
-   if (itemIdentifier.toString() != "8107") {
-      log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
-      return;
-   }
+   // if (itemIdentifier.toString() != "8107") {
+   //    log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
+   //    return;
+   // }
 
 
    let toUser = findOrCreateUser(toAddr);
@@ -273,7 +273,15 @@ function handleMint(event: Transfer): void {
    let tokenContractAddress = event.address.toHexString();
    let token = tokenContractAddress.concat("-").concat(tokenId.toString());
 
-   let itemExchangeAddress = itemContract.itemExchangeContract();
+   let itemExchangeAddress = itemContract.itemExchangeContract(); 
+   
+   let itemIdentifier = itemContract.itemIdentifier(); 
+
+   if (itemIdentifier.toString() != "8107") {
+      log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
+      return;
+   }
+
 
    let item = createItem(
       token,
