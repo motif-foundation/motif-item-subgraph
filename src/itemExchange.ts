@@ -22,40 +22,47 @@ import {
 const REMOVED = 'Removed'
 const FINALIZED = 'Finalized'
 
+var avatarAddress = "0x441c2909D520DBCA6F0d478d57a93a6C5b13495b";
+var spaceAddress = "0xaBcB23c9EE6de4471BC4034238cd812d3b704B8c";
+var landAddress = "0x1609F4fd1E709F5210b08ae790D1f97546685975";
+
 /**
  * Handler called when a `BidShareUpdated` Event is emitted on the Motif ItemExchange Contract
  * @param event
  */
 export function handleBidShareUpdated(event: BidShareUpdated): void {
   let tokenId = event.params.tokenId.toString()
-  if(tokenId.length > 10) { 
-	  let bidShares = event.params.bidShares
+  let bidShares = event.params.bidShares
 
-	  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+    tokenId,
+    bidShares.toString(),
+  ])
+
+  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
+  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+  	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId,
-	    bidShares.toString(),
 	  ])
-	 
-	  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
-	  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
-	  let item = Item.load(token)
+  	  return
+  } 
 
-	  if (item == null) {
-	    log.error('Item is null for tokenId: {}', [tokenId])
-	  } 
+  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
+  let item = Item.load(token)
 
-	  item.creatorBidShare = bidShares.creator.value
-	  item.ownerBidShare = bidShares.owner.value
-	  item.prevOwnerBidShare = bidShares.prevOwner.value
-	  item.save()
+  if (item == null) {
+    log.error('Item is null for tokenId: {}', [tokenId])
+  } 
 
-	  log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
-	    tokenId,
-	    bidShares.toString(),
-	  ])
+  item.creatorBidShare = bidShares.creator.value
+  item.ownerBidShare = bidShares.owner.value
+  item.prevOwnerBidShare = bidShares.prevOwner.value
+  item.save()
 
-  }
-
+  log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+    tokenId,
+    bidShares.toString(),
+  ])
 }
 
 /**
@@ -64,72 +71,69 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
  */
 export function handleAskCreated(event: AskCreated): void {
   let tokenId = event.params.tokenId.toString()
-  if(tokenId.length > 10) { 
+  let onchainAsk = event.params.ask
 
-	  let onchainAsk = event.params.ask
+  log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
+    tokenId,
+    onchainAsk.toString(),
+  ])
 
-	  log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
-	    tokenId,
-	    onchainAsk.toString(),
-	  ])
+  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
+  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
+  let item = Item.load(token)
 
-	  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
-	  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
-	  let item = Item.load(token)
+  if (item == null) {
+    log.error('Item is null for tokenId: {}', [tokenId])
+  }
 
-	  if (item == null) {
-	    log.error('Item is null for tokenId: {}', [tokenId])
-	  }
+  let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())
+  let askId = item.id.concat('-').concat(item.owner)
+  let ask = Ask.load(askId)
 
-	  let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())
-	  let askId = item.id.concat('-').concat(item.owner)
-	  let ask = Ask.load(askId)
+  if (ask == null) {
+    createAsk(
+      askId,
+      event.transaction.hash.toHexString(),
+      onchainAsk.amount,
+      currency,
+      item as Item,
+      event.block.timestamp,
+      event.block.number
+    )
+  } else {
+    let inactiveAskId = tokenId
+      .concat('-')
+      .concat(event.transaction.hash.toHexString())
+      .concat('-')
+      .concat(event.transactionLogIndex.toString())
 
-	  if (ask == null) {
-	    createAsk(
-	      askId,
-	      event.transaction.hash.toHexString(),
-	      onchainAsk.amount,
-	      currency,
-	      item as Item,
-	      event.block.timestamp,
-	      event.block.number
-	    )
-	  } else {
-	    let inactiveAskId = tokenId
-	      .concat('-')
-	      .concat(event.transaction.hash.toHexString())
-	      .concat('-')
-	      .concat(event.transactionLogIndex.toString())
+    // create an inactive ask
+    createInactiveAsk(
+      inactiveAskId,
+      event.transaction.hash.toHexString(),
+      item as Item,
+      REMOVED,
+      ask.amount,
+      currency,
+      ask.owner,
+      ask.createdAtTimestamp,
+      ask.createdAtBlockNumber,
+      event.block.timestamp,
+      event.block.number
+    )
 
-	    // create an inactive ask
-	    createInactiveAsk(
-	      inactiveAskId,
-	      event.transaction.hash.toHexString(),
-	      item as Item,
-	      REMOVED,
-	      ask.amount,
-	      currency,
-	      ask.owner,
-	      ask.createdAtTimestamp,
-	      ask.createdAtBlockNumber,
-	      event.block.timestamp,
-	      event.block.number
-	    )
+    // update the fields on the original ask object
+    ask.amount = onchainAsk.amount
+    ask.currency = currency.id
+    ask.createdAtTimestamp = event.block.timestamp
+    ask.createdAtBlockNumber = event.block.number
+    ask.save()
+  }
 
-	    // update the fields on the original ask object
-	    ask.amount = onchainAsk.amount
-	    ask.currency = currency.id
-	    ask.createdAtTimestamp = event.block.timestamp
-	    ask.createdAtBlockNumber = event.block.number
-	    ask.save()
-	  }
-
-	  log.info(`Completed handler for AskCreated Event for tokenId: {}, ask: {}`, [
-	    tokenId,
-	    onchainAsk.toString(),
-	  ])
-}
+  log.info(`Completed handler for AskCreated Event for tokenId: {}, ask: {}`, [
+    tokenId,
+    onchainAsk.toString(),
+  ])
 }
 
 /**

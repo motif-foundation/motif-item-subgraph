@@ -19,6 +19,12 @@ import {
 
 const CONTENT = 'Content'
 const METADATA = 'Metadata'
+ 
+
+var avatarAddress = "0x441c2909D520DBCA6F0d478d57a93a6C5b13495b";
+var spaceAddress = "0xaBcB23c9EE6de4471BC4034238cd812d3b704B8c";
+var landAddress = "0x1609F4fd1E709F5210b08ae790D1f97546685975";
+ 
 
 /**
  * Handler called when the `TokenURIUpdated` Event is called on the Motif Contract
@@ -118,63 +124,79 @@ export function handleTransfer(event: Transfer): void {
   let fromAddr = event.params.from.toHexString()
   let toAddr = event.params.to.toHexString()
   let tokenId = event.params.tokenId.toString()
-  if(tokenId.length > 10) { 
 
-	  log.info(`Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+  log.info(`Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+    tokenId,
+    fromAddr,
+    toAddr,
+  ])
+
+  let tokenContractAddress = event.address.toHexString() 
+
+   log.info(`tokenContractAddress: {}, space: {}, avatar: {}, land: {}`, [
+    tokenContractAddress,
+    spaceAddress,
+    avatarAddress,
+    landAddress
+  ])
+
+
+
+  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+  	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId,
-	    fromAddr,
-	    toAddr,
 	  ])
-
-	  let toUser = findOrCreateUser(toAddr)
-	  let fromUser = findOrCreateUser(fromAddr)
-
-	  if (fromUser.id == zeroAddress) {
-	    handleMint(event)
-	    return
-	  }
+  	  return
+  }
 
 
-	  let tokenContractAddress = event.address.toHexString()
-	  let token = tokenContractAddress.concat('-').concat(tokenId)  
-	  let item = Item.load(token) 
+  let toUser = findOrCreateUser(toAddr)
+  let fromUser = findOrCreateUser(fromAddr)
 
-	  if (item == null) {
-	    log.error(`Item is null for token id: {}`, [tokenId])
-	  }
+  if (fromUser.id == zeroAddress) {
+    handleMint(event)
+    return
+  }
+ 
 
-	  if (toUser.id == zeroAddress) {
-	    item.prevOwner = zeroAddress
-	    item.burnedAtTimeStamp = event.block.timestamp
-	    item.burnedAtBlockNumber = event.block.number
-	  }
+  let token = tokenContractAddress.concat('-').concat(tokenId)  
+  let item = Item.load(token) 
 
-	  item.owner = toUser.id
-	  item.approved = null
-	  item.save()
+  if (item == null) {
+    log.error(`Item is null for token id: {}`, [tokenId])
+  }
 
-	  let transferId = tokenId
-	    .concat('-')
-	    .concat(event.transaction.hash.toHexString())
-	    .concat('-')
-	    .concat(event.transactionLogIndex.toString())
+  if (toUser.id == zeroAddress) {
+    item.prevOwner = zeroAddress
+    item.burnedAtTimeStamp = event.block.timestamp
+    item.burnedAtBlockNumber = event.block.number
+  }
 
-	  createTransfer(
-	    transferId,
-	    event.transaction.hash.toHexString(),
-	    item as Item,
-	    fromUser,
-	    toUser,
-	    event.block.timestamp,
-	    event.block.number
-	  )
+  item.owner = toUser.id
+  item.approved = null
+  item.save()
 
-	  log.info(`Completed handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
-	    tokenId,
-	    fromAddr,
-	    toAddr,
-	  ])
-	}
+  let transferId = tokenId
+    .concat('-')
+    .concat(event.transaction.hash.toHexString())
+    .concat('-')
+    .concat(event.transactionLogIndex.toString())
+
+  createTransfer(
+    transferId,
+    event.transaction.hash.toHexString(),
+    item as Item,
+    fromUser,
+    toUser,
+    event.block.timestamp,
+    event.block.number
+  )
+
+  log.info(`Completed handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+    tokenId,
+    fromAddr,
+    toAddr,
+  ])
 }
 
 /**
@@ -190,9 +212,15 @@ export function handleApproval(event: Approval): void {
     `Starting handler for Approval Event of tokenId: {}, owner: {}, approved: {}`,
     [tokenId, ownerAddr, approvedAddr]
   )
-
-
+  
   let tokenContractAddress = event.address.toHexString()
+  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+  	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
+	    tokenId,
+	  ])
+  	  return
+  }
+
   let token = tokenContractAddress.concat('-').concat(tokenId)  
   let item = Item.load(token) 
 
@@ -228,6 +256,14 @@ export function handleApprovalForAll(event: ApprovalForAll): void {
     `Starting handler for ApprovalForAll Event for owner: {}, operator: {}, approved: {}`,
     [ownerAddr, operatorAddr, approved.toString()]
   )
+
+  let tokenContractAddress = event.address.toHexString()
+  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+  	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
+	    tokenContractAddress
+	  ])
+  	  return
+  }
 
   let owner = findOrCreateUser(ownerAddr)
   let operator = findOrCreateUser(operatorAddr)

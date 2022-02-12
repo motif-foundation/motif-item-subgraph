@@ -457,18 +457,18 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@motif-foundation/asset@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/asset/-/asset-1.0.11.tgz#045ca0aaa6de04c8660e39cf827b1fb3e8ae3d3b"
-  integrity sha512-TUh3kQ79rLk6hByLJkImnB6RETcf+HfIiAEjqzbe6F9qDnsMAO+0fCFXXmWn/VyF7T2hxaTJ2RTogUJM0S1zQA==
+"@motif-foundation/asset@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/asset/-/asset-1.0.15.tgz#02ed906ecdd75afc9ef3e06c8d8d647d7388f41d"
+  integrity sha512-2P2XI0R3IhMRNo1GGl3wRMhvZrWEcIV4kEaYYYog+pR02OZDEOlZTXTGDqQiqAamMkeLJWZv6skkVU2BBh7knA==
   dependencies:
     ethers "^5.0.19"
     truffle-flattener "^1.5.0"
 
-"@motif-foundation/avatar-metadata@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/avatar-metadata/-/avatar-metadata-1.0.7.tgz#161d383a16456e93e00e9d722fac0ea86739227d"
-  integrity sha512-s3M8A0Q+dzoVv5Q1yJik8eCXw+vLg5nCzAbY7fRxJ8AkxdKxeTrdFgNBN0vhgeI2sUuDvVdHKHECyB6aHEv8kA==
+"@motif-foundation/avatar-metadata@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/avatar-metadata/-/avatar-metadata-1.0.8.tgz#e4938bf6b69e2830c1348820607d055ed212696c"
+  integrity sha512-bcDzS9ipR6ZmdBXoxbCsP56dHgzJQKG1gmwXGeMYBqddX9SrZ+aaX9c7LsNdVAD7ujD4p7bAQ2h7P7PxIuv+9w==
   dependencies:
     "@types/jsonschema" "^1.1.1"
     jsonschema "^1.4.0"
@@ -498,29 +498,29 @@
     tslib "^2.0.3"
     typescript "^4.1.3"
 
-"@motif-foundation/listing@1.0.13", "@motif-foundation/listing@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/listing/-/listing-1.0.13.tgz#1a4b954ba50164992c475b43ec5d92186ab0ea50"
-  integrity sha512-4jlITrbmkVS7Ggb0khkkk2y9hZ9A1c557RjaKj6oh3V7F3CiJR8sSCL52Xlp3CPs2hytRsgCJz1m4nqXmOzNqQ==
+"@motif-foundation/listing@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/listing/-/listing-1.0.18.tgz#1dd3fc549d5434ad84f7a06bbd1f96dfc8845a50"
+  integrity sha512-QHddw6S5PxxlCvHKTeY81j5O4LaqMBwFj91ZsKBsNY+IIPVo3rXH/px0SOR0mubIKIXXIP79am+pGFrUps3H/Q==
   dependencies:
-    "@motif-foundation/asset" "^1.0.11"
+    "@motif-foundation/asset" "^1.0.15"
     "@openzeppelin/contracts" "^3.2.0"
     dotenv "^8.2.0"
     fs-extra "^9.1.0"
     minimist "^1.2.5"
     solidity-coverage "^0.7.16"
 
-"@motif-foundation/sdk@^1.0.38":
-  version "1.0.38"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/sdk/-/sdk-1.0.38.tgz#f19d4d3b5392377052649dd8e54419118a1f3137"
-  integrity sha512-bjjk3Vn9s/bL3ImKdMPdK04DwPaMNCfHPhdSezYTuI23jmMzgarO7v2xhyQ8dNxidOG7XNdJ1FYscP1AGPzrgg==
+"@motif-foundation/sdk@^1.0.44":
+  version "1.0.44"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/sdk/-/sdk-1.0.44.tgz#47b1f2dab801fb4fa44f7de86834e0882ecf964e"
+  integrity sha512-rORNvhyBE51CejD1XyD95UBbJsIWOqcNEXtP2YdoY0U556MGpFxp0y8v3eQMMhycA1+Og4ISNpiO57LgTwBZ/w==
   dependencies:
-    "@motif-foundation/asset" "^1.0.11"
-    "@motif-foundation/avatar-metadata" "^1.0.7"
+    "@motif-foundation/asset" "^1.0.15"
+    "@motif-foundation/avatar-metadata" "^1.0.8"
     "@motif-foundation/item-metadata" "^1.0.2"
     "@motif-foundation/land-metadata" "^1.0.2"
-    "@motif-foundation/listing" "^1.0.13"
-    "@motif-foundation/space-metadata" "^1.0.1"
+    "@motif-foundation/listing" "^1.0.18"
+    "@motif-foundation/space-metadata" "^1.0.4"
     axios "^0.21.1"
     eth-sig-util "^3.0.0"
     ethereumjs-util "^7.0.7"
@@ -530,10 +530,10 @@
     tiny-warning "^1.0.3"
     ts-node "^9.1.1"
 
-"@motif-foundation/space-metadata@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/space-metadata/-/space-metadata-1.0.1.tgz#2e326ab8461b0a40998d0412c820c0bd52a7784e"
-  integrity sha512-kkBfBFYgzaA7ZXxe7BKIoZuuROhmjdy57R18Mo8NxUBkVORx1I00dJr+a+XWT/nzxufexxpoi38H0Xd42oSt+w==
+"@motif-foundation/space-metadata@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/space-metadata/-/space-metadata-1.0.4.tgz#bc2df702d95f7715638a3b248a8dcc93595329d3"
+  integrity sha512-X2oy0tTjNe5gPvOVjMgEXrDMyhiIKQbNH4n0UgTpSAUnP1kgouKhq1UcOON+nIhy4hDRjFCOi7hdmip/4y4F2g==
   dependencies:
     "@types/jsonschema" "^1.1.1"
     jsonschema "^1.4.0"
