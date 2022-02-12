@@ -277,11 +277,11 @@ function handleMint(event: Transfer): void {
    
    let itemIdentifier = itemContract.itemIdentifier(); 
 
-   if (itemIdentifier.toString() != "8107") {
+/*   if (itemIdentifier.toString() != "8107") {
       log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
       return;
    }
-
+*/
 
    let item = createItem(
       token,
