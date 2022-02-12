@@ -22,9 +22,9 @@ import {
 const REMOVED = 'Removed'
 const FINALIZED = 'Finalized'
 
-var avatarAddress = "0x441c2909D520DBCA6F0d478d57a93a6C5b13495b";
-var spaceAddress = "0xaBcB23c9EE6de4471BC4034238cd812d3b704B8c";
-var landAddress = "0x1609F4fd1E709F5210b08ae790D1f97546685975";
+var avatarAddress = "0x441c2909d520dbca6f0d478d57a93a6c5b13495b";
+var spaceAddress = "0xabcb23c9ee6de4471bc4034238cd812d3b704b8c";
+var landAddress = "0x1609f4fd1e709f5210b08ae790d1f97546685975";
 
 /**
  * Handler called when a `BidShareUpdated` Event is emitted on the Motif ItemExchange Contract
