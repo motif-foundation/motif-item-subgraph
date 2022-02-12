@@ -1,203 +1,248 @@
 import {
-    createReserveListing,
-    createReserveListingBid,
-    findOrCreateCurrency,
-    findOrCreateUser,
-    handleBidReplaced,
-    handleFinishedListing,
-    handleReserveListingExtended,
-    setReserveListingFirstBidTime,
-} from './helpers'
+   createReserveListing,
+   createReserveListingBid,
+   findOrCreateCurrency,
+   findOrCreateUser,
+   handleBidReplaced,
+   handleFinishedListing,
+   handleReserveListingExtended,
+   setReserveListingFirstBidTime,
+} from "./helpers";
 import {
-    ListingApprovalUpdated,
-    ListingDropApprovalUpdated,
-    ListingBid,
-    ListingCanceled,
-    ListingCreated,
-    ListingDurationExtended,
-    ListingEnded,
-    ListingListPriceUpdated
-} from '../types/ItemListing/ItemListing'
+   ListingApprovalUpdated,
+   ListingDropApprovalUpdated,
+   ListingBid,
+   ListingCanceled,
+   ListingCreated,
+   ListingDurationExtended,
+   ListingEnded,
+   ListingListPriceUpdated,
+} from "../types/ItemListing/ItemListing";
 // import {
-//   Item as ItemContract 
+//   Item as ItemContract
 // } from '../types/Item/Item'
 
+import { Item, ReserveListing } from "../types/schema";
+import { log } from "@graphprotocol/graph-ts";
 
-
-import { Item, ReserveListing } from '../types/schema'
-import { log } from '@graphprotocol/graph-ts'
+var itemAddressArray = new Array<string>();
+itemAddressArray.push("0x4b60c6d01f2448e38026ef4830297d0dce008d09");
 
 export function handleReserveListingCreated(event: ListingCreated): void {
+   log.info(`Starting handler for ListingCreated for listing {}`, [event.params.listingId.toString()]);
 
-    log.info(`Starting handler for ListingCreated for listing {}`, [event.params.listingId.toString()])
+   let tokenId = event.params.tokenId.toString();
+   let tokenOwner = findOrCreateUser(event.params.tokenOwner.toHexString());
+   let intermediary = findOrCreateUser(event.params.intermediary.toHexString());
 
-    let tokenId = event.params.tokenId.toString()
-    let tokenOwner = findOrCreateUser(event.params.tokenOwner.toHexString())
-    let intermediary = findOrCreateUser(event.params.intermediary.toHexString())
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
+   let token = tokenContractAddress.concat("-").concat(tokenId);
+   let item = Item.load(token);
 
-	  let tokenContractAddress =event.params.tokenContract.toHexString()
-	  let token = tokenContractAddress.concat('-').concat(tokenId)  
-	  let item = Item.load(token) 
+   //let itemContract = ItemContract.bind(event.params.tokenContract)
+   //let itemExchangeAddress = itemContract.itemExchangeContract()
 
-	  //let itemContract = ItemContract.bind(event.params.tokenContract)
-	  //let itemExchangeAddress = itemContract.itemExchangeContract()
+   createReserveListing(
+      event.params.listingId.toString(),
+      event.transaction.hash.toHexString(),
+      event.params.tokenId,
+      event.params.tokenContract.toHexString(),
+      //itemExchangeAddress.toHexString(),
+      item,
+      event.params.startsAt,
+      event.params.duration,
+      event.params.listPrice,
+      event.params.listType,
+      event.params.intermediaryFeePercentage,
+      findOrCreateCurrency(event.params.listCurrency.toHexString()),
+      event.block.timestamp,
+      event.block.number,
+      tokenOwner,
+      intermediary
+   );
 
-    createReserveListing(
-        event.params.listingId.toString(),
-        event.transaction.hash.toHexString(),
-        event.params.tokenId,
-        event.params.tokenContract.toHexString(),
-        //itemExchangeAddress.toHexString(),
-        item,
-        event.params.startsAt, 
-        event.params.duration,
-        event.params.listPrice,
-        event.params.listType,
-        event.params.intermediaryFeePercentage,
-        findOrCreateCurrency(event.params.listCurrency.toHexString()),
-        event.block.timestamp,
-        event.block.number,
-        tokenOwner,
-        intermediary
-    )
-
-    log.info(`Completed handler for ListingCreated for listing {}`, [event.params.listingId.toString()])
+   log.info(`Completed handler for ListingCreated for listing {}`, [event.params.listingId.toString()]);
 }
 
 export function handleReserveListingApprovalUpdate(event: ListingApprovalUpdated): void {
-    let id = event.params.listingId.toString()
-    log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id])
+   let id = event.params.listingId.toString();
+   log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id]);
 
-    let listing = ReserveListing.load(id)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    listing.approved = event.params.approved
-    listing.status = 'Active'
-    listing.approvedTimestamp = event.block.timestamp;
-    listing.approvedBlockNumber = event.block.number;
-    listing.save()
+   let listing = ReserveListing.load(id);
 
-    log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id])
+   listing.approved = event.params.approved;
+   listing.status = "Active";
+   listing.approvedTimestamp = event.block.timestamp;
+   listing.approvedBlockNumber = event.block.number;
+   listing.save();
+
+   log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id]);
 }
 
-
 export function handleReserveListingDropApprovalUpdate(event: ListingDropApprovalUpdated): void {
-    let id = event.params.listingId.toString()
-    log.info(`Starting handler for ListingDropApprovalUpdate on listing {}`, [id])
+   let id = event.params.listingId.toString();
+   log.info(`Starting handler for ListingDropApprovalUpdate on listing {}`, [id]);
 
-    let listing = ReserveListing.load(id)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    listing.approved = event.params.approved
-    listing.status = 'Active'
-    listing.approvedTimestamp = event.block.timestamp;
-    listing.approvedBlockNumber = event.block.number;
-    listing.startsAt = event.params.startsAt;
+   let listing = ReserveListing.load(id);
 
-    listing.save()
+   listing.approved = event.params.approved;
+   listing.status = "Active";
+   listing.approvedTimestamp = event.block.timestamp;
+   listing.approvedBlockNumber = event.block.number;
+   listing.startsAt = event.params.startsAt;
 
-    log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id])
+   listing.save();
+
+   log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id]);
 }
 
 export function handleReserveListingListPriceUpdate(event: ListingListPriceUpdated): void {
-    let id = event.params.listingId.toString()
-    log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id])
+   let id = event.params.listingId.toString();
+   log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id]);
 
-    let listing = ReserveListing.load(id)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    listing.listPrice = event.params.listPrice
-    listing.save()
+   let listing = ReserveListing.load(id);
 
-    log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id])
+   listing.listPrice = event.params.listPrice;
+   listing.save();
+
+   log.info(`Completed handler for ListingApprovalUpdate on listing {}`, [id]);
 }
 
 export function handleReserveListingBid(event: ListingBid): void {
-    let listingId = event.params.listingId.toString()
-    log.info(`Starting handler for ListingBid on listing {}`, [listingId])
+   let listingId = event.params.listingId.toString();
+   log.info(`Starting handler for ListingBid on listing {}`, [listingId]);
 
-    let listing = ReserveListing.load(listingId)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    if (listing === null) {
-        log.error('Missing Reserve Listing with id {} for bid', [listingId])
-        return
-    }
+   let listing = ReserveListing.load(listingId);
 
-    if (event.params.firstBid) {
-        log.info('setting listing first bid time', [])
-        setReserveListingFirstBidTime(listing as ReserveListing, event.block.timestamp)
-    } else {
-        log.info('replacing bid', [])
-        handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number)
-    }
+   if (listing === null) {
+      log.error("Missing Reserve Listing with id {} for bid", [listingId]);
+      return;
+   }
 
-    let id = listingId.concat('-').concat(event.transaction.hash.toHexString()).concat('-').concat(event.logIndex.toString())
+   if (event.params.firstBid) {
+      log.info("setting listing first bid time", []);
+      setReserveListingFirstBidTime(listing as ReserveListing, event.block.timestamp);
+   } else {
+      log.info("replacing bid", []);
+      handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number);
+   }
 
-    createReserveListingBid(
-        id,
-        event.transaction.hash.toHexString(),
-        listing as ReserveListing,
-        event.params.value,
-        event.block.timestamp,
-        event.block.number,
-        findOrCreateUser(event.params.sender.toHexString())
-    )
+   let id = listingId.concat("-").concat(event.transaction.hash.toHexString()).concat("-").concat(event.logIndex.toString());
 
-    log.info(`Completed handler for ListingBid on listing {}`, [listingId])
+   createReserveListingBid(
+      id,
+      event.transaction.hash.toHexString(),
+      listing as ReserveListing,
+      event.params.value,
+      event.block.timestamp,
+      event.block.number,
+      findOrCreateUser(event.params.sender.toHexString())
+   );
+
+   log.info(`Completed handler for ListingBid on listing {}`, [listingId]);
 }
 
 export function handleReserveListingDurationExtended(event: ListingDurationExtended): void {
-    let listingId = event.params.listingId.toString()
-    log.info(`Starting handler for ListingDurationExtended on listing {}`, [listingId])
+   let listingId = event.params.listingId.toString();
+   log.info(`Starting handler for ListingDurationExtended on listing {}`, [listingId]);
 
-    let listing = ReserveListing.load(listingId)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    if (listing === null) {
-        log.error('Missing Reserve Listing with id {} for bid', [listingId])
-        return
-    }
+   let listing = ReserveListing.load(listingId);
 
-    handleReserveListingExtended(listing as ReserveListing, event.params.duration);
+   if (listing === null) {
+      log.error("Missing Reserve Listing with id {} for bid", [listingId]);
+      return;
+   }
 
-    log.info(`Completed handler for ListingDurationExtended on listing {}`, [listingId])
+   handleReserveListingExtended(listing as ReserveListing, event.params.duration);
+
+   log.info(`Completed handler for ListingDurationExtended on listing {}`, [listingId]);
 }
 
 export function handleReserveListingEnded(event: ListingEnded): void {
-    let listingId = event.params.listingId.toString()
-    log.info(`Starting handler for ListingEnd on listing {}`, [listingId])
+   let listingId = event.params.listingId.toString();
+   log.info(`Starting handler for ListingEnd on listing {}`, [listingId]);
 
-    let listing = ReserveListing.load(listingId)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    if (!listing) {
-        log.error('Missing Reserve Listing with id {} for bid', [listingId])
-        return
-    }
+   let listing = ReserveListing.load(listingId);
 
-    // First, remove the current bid and set it to the winning bid
-    handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number, true)
+   if (!listing) {
+      log.error("Missing Reserve Listing with id {} for bid", [listingId]);
+      return;
+   }
 
-    // Then, finalize the listing
-    handleFinishedListing(listing as ReserveListing, event.block.timestamp, event.block.number)
+   // First, remove the current bid and set it to the winning bid
+   handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number, true);
 
-    log.info(`Completed handler for ListingEnd on listing {}`, [listingId])
+   // Then, finalize the listing
+   handleFinishedListing(listing as ReserveListing, event.block.timestamp, event.block.number);
+
+   log.info(`Completed handler for ListingEnd on listing {}`, [listingId]);
 }
 
 export function handleReserveListingCanceled(event: ListingCanceled): void {
-    let listingId = event.params.listingId.toString()
-    log.info(`Starting handler for ListingCanceled on listing {}`, [listingId])
+   let listingId = event.params.listingId.toString();
+   log.info(`Starting handler for ListingCanceled on listing {}`, [listingId]);
 
-    let listing = ReserveListing.load(listingId)
+   let tokenContractAddress = event.params.tokenContract.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
-    if (!listing) {
-        log.error('Missing Reserve Listing with id {} for bid', [listingId])
-    }
+   let listing = ReserveListing.load(listingId);
 
-    // First, remove any current bid and set it to refunded
-    if (listing.currentBid) {
-        handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number)
-    }
+   if (!listing) {
+      log.error("Missing Reserve Listing with id {} for bid", [listingId]);
+   }
 
-    // Then, create an inactive listing based of of the current active listing
-    // Then, finalize the listing
-    handleFinishedListing(listing as ReserveListing, event.block.timestamp, event.block.number)
+   // First, remove any current bid and set it to refunded
+   if (listing.currentBid) {
+      handleBidReplaced(listing as ReserveListing, event.block.timestamp, event.block.number);
+   }
 
-    log.info(`Completed handler for ListingCanceled on listing {}`, [listingId])
+   // Then, create an inactive listing based of of the current active listing
+   // Then, finalize the listing
+   handleFinishedListing(listing as ReserveListing, event.block.timestamp, event.block.number);
+
+   log.info(`Completed handler for ListingCanceled on listing {}`, [listingId]);
 }
