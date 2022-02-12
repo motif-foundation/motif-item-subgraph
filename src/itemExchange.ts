@@ -42,19 +42,19 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
 
   let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
   
-  log.info(`tokenContractAddress: {}, space: {}, avatar: {}, land: {}`, [
+  log.info(`tokenContractAddress exchange: {}, space: {}, avatar: {}, land: {}`, [
     tokenContractAddress,
     spaceAddress,
     avatarAddress,
     landAddress
   ])
 
- if (tokenContractAddress == "0x441c2909d520dbca6f0d478d57a93a6c5b13495b") {
-		log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
-    tokenId
-  ])
-		return 
-}
+	 if (tokenContractAddress == "0x441c2909d520dbca6f0d478d57a93a6c5b13495b") {
+			log.info(`Found avatar exchange, space or land contract for tokenId: {} -> not proceeding`, [
+	    tokenId
+	  ])
+			return 
+	}
 
 
 
