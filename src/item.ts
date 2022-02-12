@@ -119,15 +119,22 @@ export function handleTransfer(event: Transfer): void {
 
 
 
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   //    return;
+   // }
+
+
+   let itemContract = ItemContract.bind(event.address);
    let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   let itemExchangeAddress = itemContract.itemExchangeContract();
+   let itemIdentifier = itemContract.itemIdentifier(); 
+
+   if (itemIdentifier.toString() != "8107") {
+      log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
       return;
    }
-
-
-
-
 
 
    let toUser = findOrCreateUser(toAddr);

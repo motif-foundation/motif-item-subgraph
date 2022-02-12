@@ -457,10 +457,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@motif-foundation/asset@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/asset/-/asset-1.0.15.tgz#02ed906ecdd75afc9ef3e06c8d8d647d7388f41d"
-  integrity sha512-2P2XI0R3IhMRNo1GGl3wRMhvZrWEcIV4kEaYYYog+pR02OZDEOlZTXTGDqQiqAamMkeLJWZv6skkVU2BBh7knA==
+"@motif-foundation/asset@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/asset/-/asset-1.0.16.tgz#1d26584f6be23d4ebd1a4e2717c14e7ec39c6782"
+  integrity sha512-rv61OgG+QFJlPhNhmm7XH028joBBnR/wExekqa5hdsQdOts0bgxKJH3Mr25IfEqd6sYRCa/FMkffFRKTMAeTXA==
   dependencies:
     ethers "^5.0.19"
     truffle-flattener "^1.5.0"
@@ -498,28 +498,28 @@
     tslib "^2.0.3"
     typescript "^4.1.3"
 
-"@motif-foundation/listing@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/listing/-/listing-1.0.18.tgz#1dd3fc549d5434ad84f7a06bbd1f96dfc8845a50"
-  integrity sha512-QHddw6S5PxxlCvHKTeY81j5O4LaqMBwFj91ZsKBsNY+IIPVo3rXH/px0SOR0mubIKIXXIP79am+pGFrUps3H/Q==
+"@motif-foundation/listing@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/listing/-/listing-1.0.19.tgz#ca13bcbb3cc7d2feb7326bd4c4e2b4d4a710f51f"
+  integrity sha512-//xV3w7S6bbqXP3I/03uvAaFQpiiaLGrm0yDFoKTiT9+iYIhLMin5ZnG06H04i2BUNAFTNxer75YCF76GWB0xQ==
   dependencies:
-    "@motif-foundation/asset" "^1.0.15"
+    "@motif-foundation/asset" "^1.0.16"
     "@openzeppelin/contracts" "^3.2.0"
     dotenv "^8.2.0"
     fs-extra "^9.1.0"
     minimist "^1.2.5"
     solidity-coverage "^0.7.16"
 
-"@motif-foundation/sdk@^1.0.44":
-  version "1.0.44"
-  resolved "https://registry.yarnpkg.com/@motif-foundation/sdk/-/sdk-1.0.44.tgz#47b1f2dab801fb4fa44f7de86834e0882ecf964e"
-  integrity sha512-rORNvhyBE51CejD1XyD95UBbJsIWOqcNEXtP2YdoY0U556MGpFxp0y8v3eQMMhycA1+Og4ISNpiO57LgTwBZ/w==
+"@motif-foundation/sdk@^1.0.45":
+  version "1.0.45"
+  resolved "https://registry.yarnpkg.com/@motif-foundation/sdk/-/sdk-1.0.45.tgz#d34002ba51c6d13f60a0edd61ed0cc62a45bab95"
+  integrity sha512-E1L3gwTPSxxhl4pIVVJojf8YK+8bihQ93/kXXaXtVjyCssIUQLUNc0VkNJxjSQcQ+3sFpa2h1P4kiyNytU1oJQ==
   dependencies:
-    "@motif-foundation/asset" "^1.0.15"
+    "@motif-foundation/asset" "^1.0.16"
     "@motif-foundation/avatar-metadata" "^1.0.8"
     "@motif-foundation/item-metadata" "^1.0.2"
     "@motif-foundation/land-metadata" "^1.0.2"
-    "@motif-foundation/listing" "^1.0.18"
+    "@motif-foundation/listing" "^1.0.19"
     "@motif-foundation/space-metadata" "^1.0.4"
     axios "^0.21.1"
     eth-sig-util "^3.0.0"
