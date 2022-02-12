@@ -123,7 +123,7 @@ export function handleTransfer(event: Transfer): void {
   let toAddr = event.params.to.toHexString()
   let tokenId = event.params.tokenId.toString()
 
-  log.info(`Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+  log.info(`StartingXXXXXXXX handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
     tokenId,
     fromAddr,
     toAddr,
@@ -131,7 +131,7 @@ export function handleTransfer(event: Transfer): void {
 
   let tokenContractAddress = event.address.toHexString() 
 
-   log.info(`tokenContractAddress here: {}, space: {}, avatar: {}, land: {}`, [
+   log.info(`tokenContractAddressXXXXX here: {}, space: {}, avatar: {}, land: {}`, [
     tokenContractAddress,
     spaceAddress,
     avatarAddress,
