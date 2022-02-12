@@ -119,11 +119,11 @@ export function handleTransfer(event: Transfer): void {
 
 
 
-   // let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-   //    return;
-   // }
+   let tokenContractAddress = event.address.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
 
 
    // let itemContract = ItemContract.bind(event.address);
