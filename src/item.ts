@@ -113,7 +113,7 @@ export function handleTransfer(event: Transfer): void {
 
    let itemExchangeAddress = itemContract.itemExchangeContract();
 
-   let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
+   //let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
 
    //log.info(`ITEM: PERMIT_TYPEHASH: {} -> not proceeding`, [itemPermitTypeHash.toHexString()]);
 
