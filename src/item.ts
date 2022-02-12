@@ -118,61 +118,63 @@ export function handleTransfer(event: Transfer): void {
   let fromAddr = event.params.from.toHexString()
   let toAddr = event.params.to.toHexString()
   let tokenId = event.params.tokenId.toString()
+  if(tokenId.length > 10) { 
 
-  log.info(`Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
-    tokenId,
-    fromAddr,
-    toAddr,
-  ])
+	  log.info(`Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+	    tokenId,
+	    fromAddr,
+	    toAddr,
+	  ])
 
-  let toUser = findOrCreateUser(toAddr)
-  let fromUser = findOrCreateUser(fromAddr)
+	  let toUser = findOrCreateUser(toAddr)
+	  let fromUser = findOrCreateUser(fromAddr)
 
-  if (fromUser.id == zeroAddress) {
-    handleMint(event)
-    return
-  }
+	  if (fromUser.id == zeroAddress) {
+	    handleMint(event)
+	    return
+	  }
 
 
-  let tokenContractAddress = event.address.toHexString()
-  let token = tokenContractAddress.concat('-').concat(tokenId)  
-  let item = Item.load(token) 
+	  let tokenContractAddress = event.address.toHexString()
+	  let token = tokenContractAddress.concat('-').concat(tokenId)  
+	  let item = Item.load(token) 
 
-  if (item == null) {
-    log.error(`Item is null for token id: {}`, [tokenId])
-  }
+	  if (item == null) {
+	    log.error(`Item is null for token id: {}`, [tokenId])
+	  }
 
-  if (toUser.id == zeroAddress) {
-    item.prevOwner = zeroAddress
-    item.burnedAtTimeStamp = event.block.timestamp
-    item.burnedAtBlockNumber = event.block.number
-  }
+	  if (toUser.id == zeroAddress) {
+	    item.prevOwner = zeroAddress
+	    item.burnedAtTimeStamp = event.block.timestamp
+	    item.burnedAtBlockNumber = event.block.number
+	  }
 
-  item.owner = toUser.id
-  item.approved = null
-  item.save()
+	  item.owner = toUser.id
+	  item.approved = null
+	  item.save()
 
-  let transferId = tokenId
-    .concat('-')
-    .concat(event.transaction.hash.toHexString())
-    .concat('-')
-    .concat(event.transactionLogIndex.toString())
+	  let transferId = tokenId
+	    .concat('-')
+	    .concat(event.transaction.hash.toHexString())
+	    .concat('-')
+	    .concat(event.transactionLogIndex.toString())
 
-  createTransfer(
-    transferId,
-    event.transaction.hash.toHexString(),
-    item as Item,
-    fromUser,
-    toUser,
-    event.block.timestamp,
-    event.block.number
-  )
+	  createTransfer(
+	    transferId,
+	    event.transaction.hash.toHexString(),
+	    item as Item,
+	    fromUser,
+	    toUser,
+	    event.block.timestamp,
+	    event.block.number
+	  )
 
-  log.info(`Completed handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
-    tokenId,
-    fromAddr,
-    toAddr,
-  ])
+	  log.info(`Completed handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [
+	    tokenId,
+	    fromAddr,
+	    toAddr,
+	  ])
+	}
 }
 
 /**

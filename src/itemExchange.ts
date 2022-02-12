@@ -28,30 +28,34 @@ const FINALIZED = 'Finalized'
  */
 export function handleBidShareUpdated(event: BidShareUpdated): void {
   let tokenId = event.params.tokenId.toString()
-  let bidShares = event.params.bidShares
+  if(tokenId.length > 10) { 
+	  let bidShares = event.params.bidShares
 
-  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
-    tokenId,
-    bidShares.toString(),
-  ])
- 
-  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
-  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
-  let item = Item.load(token)
+	  log.info(`Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+	    tokenId,
+	    bidShares.toString(),
+	  ])
+	 
+	  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
+	  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
+	  let item = Item.load(token)
 
-  if (item == null) {
-    log.error('Item is null for tokenId: {}', [tokenId])
-  } 
+	  if (item == null) {
+	    log.error('Item is null for tokenId: {}', [tokenId])
+	  } 
 
-  item.creatorBidShare = bidShares.creator.value
-  item.ownerBidShare = bidShares.owner.value
-  item.prevOwnerBidShare = bidShares.prevOwner.value
-  item.save()
+	  item.creatorBidShare = bidShares.creator.value
+	  item.ownerBidShare = bidShares.owner.value
+	  item.prevOwnerBidShare = bidShares.prevOwner.value
+	  item.save()
 
-  log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
-    tokenId,
-    bidShares.toString(),
-  ])
+	  log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+	    tokenId,
+	    bidShares.toString(),
+	  ])
+
+  }
+
 }
 
 /**
@@ -60,69 +64,72 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
  */
 export function handleAskCreated(event: AskCreated): void {
   let tokenId = event.params.tokenId.toString()
-  let onchainAsk = event.params.ask
+  if(tokenId.length > 10) { 
 
-  log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
-    tokenId,
-    onchainAsk.toString(),
-  ])
+	  let onchainAsk = event.params.ask
 
-  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
-  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
-  let item = Item.load(token)
+	  log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
+	    tokenId,
+	    onchainAsk.toString(),
+	  ])
 
-  if (item == null) {
-    log.error('Item is null for tokenId: {}', [tokenId])
-  }
+	  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
+	  let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
+	  let item = Item.load(token)
 
-  let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())
-  let askId = item.id.concat('-').concat(item.owner)
-  let ask = Ask.load(askId)
+	  if (item == null) {
+	    log.error('Item is null for tokenId: {}', [tokenId])
+	  }
 
-  if (ask == null) {
-    createAsk(
-      askId,
-      event.transaction.hash.toHexString(),
-      onchainAsk.amount,
-      currency,
-      item as Item,
-      event.block.timestamp,
-      event.block.number
-    )
-  } else {
-    let inactiveAskId = tokenId
-      .concat('-')
-      .concat(event.transaction.hash.toHexString())
-      .concat('-')
-      .concat(event.transactionLogIndex.toString())
+	  let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())
+	  let askId = item.id.concat('-').concat(item.owner)
+	  let ask = Ask.load(askId)
 
-    // create an inactive ask
-    createInactiveAsk(
-      inactiveAskId,
-      event.transaction.hash.toHexString(),
-      item as Item,
-      REMOVED,
-      ask.amount,
-      currency,
-      ask.owner,
-      ask.createdAtTimestamp,
-      ask.createdAtBlockNumber,
-      event.block.timestamp,
-      event.block.number
-    )
+	  if (ask == null) {
+	    createAsk(
+	      askId,
+	      event.transaction.hash.toHexString(),
+	      onchainAsk.amount,
+	      currency,
+	      item as Item,
+	      event.block.timestamp,
+	      event.block.number
+	    )
+	  } else {
+	    let inactiveAskId = tokenId
+	      .concat('-')
+	      .concat(event.transaction.hash.toHexString())
+	      .concat('-')
+	      .concat(event.transactionLogIndex.toString())
 
-    // update the fields on the original ask object
-    ask.amount = onchainAsk.amount
-    ask.currency = currency.id
-    ask.createdAtTimestamp = event.block.timestamp
-    ask.createdAtBlockNumber = event.block.number
-    ask.save()
-  }
+	    // create an inactive ask
+	    createInactiveAsk(
+	      inactiveAskId,
+	      event.transaction.hash.toHexString(),
+	      item as Item,
+	      REMOVED,
+	      ask.amount,
+	      currency,
+	      ask.owner,
+	      ask.createdAtTimestamp,
+	      ask.createdAtBlockNumber,
+	      event.block.timestamp,
+	      event.block.number
+	    )
 
-  log.info(`Completed handler for AskCreated Event for tokenId: {}, ask: {}`, [
-    tokenId,
-    onchainAsk.toString(),
-  ])
+	    // update the fields on the original ask object
+	    ask.amount = onchainAsk.amount
+	    ask.currency = currency.id
+	    ask.createdAtTimestamp = event.block.timestamp
+	    ask.createdAtBlockNumber = event.block.number
+	    ask.save()
+	  }
+
+	  log.info(`Completed handler for AskCreated Event for tokenId: {}, ask: {}`, [
+	    tokenId,
+	    onchainAsk.toString(),
+	  ])
+}
 }
 
 /**
