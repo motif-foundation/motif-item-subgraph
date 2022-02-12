@@ -268,8 +268,6 @@ function handleMint(event: Transfer): void {
 
    let itemExchangeAddress = itemContract.itemExchangeContract();
 
-   let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH(); 
-
    let item = createItem(
       token,
       tokenId.toString(),
