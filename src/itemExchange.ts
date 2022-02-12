@@ -33,14 +33,17 @@ var landExchangeAddress = "0xf82563794243fd490b88bb7d49244f9b5150bb48";
 export function handleBidShareUpdated(event: BidShareUpdated): void {
   let tokenId = event.params.tokenId.toString()
   let bidShares = event.params.bidShares
+  let exchangeAddrsss = event.address.toHexString()
 
-  log.info(`ITEMEXCHANGE: Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
+  log.info(`ITEMEXCHANGE: Starting handler for BidShareUpdated Event for exchangeAddrsss: {},  tokenId: {}, bidShares: {}`, [
+    exchangeAddrsss,
     tokenId,
-    bidShares.toString(),
+    bidShares.toString()
+    
   ])
 
 
-	if (event.address == "0x4012d7b3f1b6832da88dd8c169f9ee862beba072") {
+	if (exchangeAddrsss == "0x4012d7b3f1b6832da88dd8c169f9ee862beba072") {
 		log.info(`ITEMEXCHANGE: Found avatar exchange, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId
 	  ])
