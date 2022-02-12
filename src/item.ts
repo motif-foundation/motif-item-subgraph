@@ -109,9 +109,9 @@ export function handleTransfer(event: Transfer): void {
 
    log.info(`ITEM: Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [tokenId, fromAddr, toAddr]);
 
-   let itemContract = ItemContract.bind(event.address);
+   //let itemContract = ItemContract.bind(event.address);
 
-   let itemExchangeAddress = itemContract.itemExchangeContract();
+   //let itemExchangeAddress = itemContract.itemExchangeContract();
 
    //let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
 
