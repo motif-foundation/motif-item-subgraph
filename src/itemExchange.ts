@@ -52,13 +52,9 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
  
 
 
-/*  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
-  	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
-	    tokenId,
-	  ])
-  	  return
-  } */
 
+  let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
+   
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
   let item = Item.load(token)
 
