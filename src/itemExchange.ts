@@ -49,14 +49,22 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
     landAddress
   ])
 
+ if (tokenContractAddress == "0x441c2909d520dbca6f0d478d57a93a6c5b13495b") {
+		log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
+    tokenId
+  ])
+		return 
+}
 
 
-  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
+
+
+/*  if (tokenContractAddress === avatarAddress || tokenContractAddress === spaceAddress ||tokenContractAddress === landAddress) {
   	  log.info(`Found avatar, space or land contract for tokenId: {} -> not proceeding`, [
 	    tokenId,
 	  ])
   	  return
-  } 
+  } */
 
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
   let item = Item.load(token)
