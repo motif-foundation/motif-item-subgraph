@@ -275,7 +275,7 @@ function handleMint(event: Transfer): void {
 
    let itemExchangeAddress = itemContract.itemExchangeContract(); 
 
-   //let itemIdentifier = itemContract.itemIdentifier(); 
+   //let itemIdentifier = itemContract.itemIdentifier(); //DOESNT WORK!!!!!
 
 /*   if (itemIdentifier.toString() != "8107") {
       log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
