@@ -3,6 +3,7 @@ import { Approval, ApprovalForAll, Item as ItemContract, TokenMetadataURIUpdated
 import { log } from "@graphprotocol/graph-ts";
 import { createItem, createTransfer, createURIUpdate, fetchItemBidShares, findOrCreateUser, zeroAddress } from "./helpers";
 
+
 const CONTENT = "Content";
 const METADATA = "Metadata";
 
@@ -23,7 +24,7 @@ export function handleTokenURIUpdated(event: TokenURIUpdated): void {
       log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
       return;
    }
-   
+
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
 
@@ -107,12 +108,30 @@ export function handleTransfer(event: Transfer): void {
    let tokenId = event.params.tokenId.toString();
 
    log.info(`ITEM: Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [tokenId, fromAddr, toAddr]);
+ 
+   let itemContract = ItemContract.bind(event.address);
+
+   let itemExchangeAddress = itemContract.itemExchangeContract();
+
+   let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
+
+   log.info(`ITEM: PERMIT_TYPEHASH: {} -> not proceeding`, [itemPermitTypeHash.toHexString()]);
+
+ 
+
+
+
 
    let tokenContractAddress = event.address.toHexString();
    if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
       return;
    }
+
+
+
+
+
 
    let toUser = findOrCreateUser(toAddr);
    let fromUser = findOrCreateUser(fromAddr);
