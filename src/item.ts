@@ -108,10 +108,7 @@ export function handleTransfer(event: Transfer): void {
    let tokenId = event.params.tokenId.toString();
 
    log.info(`ITEM: Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [tokenId, fromAddr, toAddr]);
-
-   //let itemContract = ItemContract.bind(event.address);
-
-   //let itemExchangeAddress = itemContract.itemExchangeContract();
+ 
 
    //let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
 
@@ -270,6 +267,8 @@ function handleMint(event: Transfer): void {
    let token = tokenContractAddress.concat("-").concat(tokenId.toString());
 
    let itemExchangeAddress = itemContract.itemExchangeContract();
+
+   let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
 
    let item = createItem(
       token,
