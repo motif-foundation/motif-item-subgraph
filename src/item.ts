@@ -64,7 +64,7 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
    let itemContract = ItemContract.bind(event.address); 
  
    if (itemContract.itemIdentifier() == null) {
-   	log.info(`ITEM: cannot get itemIdentifierString, NOT PROCEEDING : {}`,[tokenId]);
+   	log.info(`ITEM: cannot get itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
       return;
    } 
    let itemIdentifier = itemContract.getItemIdentifier();  
