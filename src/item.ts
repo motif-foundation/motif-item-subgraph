@@ -19,11 +19,11 @@ export function handleTokenURIUpdated(event: TokenURIUpdated): void {
 
    log.info(`Starting handler for TokenURIUpdated Event for tokenId: {}`, [tokenId]);
 
-   let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-      return;
-   }
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   //    return;
+   // }
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -63,11 +63,11 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
 
    log.info(`Starting handler for TokenMetadataURIUpdated Event for tokenId: {}`, [tokenId]);
 
-   let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-      return;
-   }
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   //    return;
+   // }
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -119,11 +119,11 @@ export function handleTransfer(event: Transfer): void {
 
 
 
-   let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-      return;
-   }
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   //    return;
+   // }
 
 
    // let itemContract = ItemContract.bind(event.address);
@@ -180,11 +180,11 @@ export function handleApproval(event: Approval): void {
 
    log.info(`Starting handler for Approval Event of tokenId: {}, owner: {}, approved: {}`, [tokenId, ownerAddr, approvedAddr]);
 
-   let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-      return;
-   }
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+   //    return;
+   // }
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -216,11 +216,11 @@ export function handleApprovalForAll(event: ApprovalForAll): void {
 
    log.info(`Starting handler for ApprovalForAll Event for owner: {}, operator: {}, approved: {}`, [ownerAddr, operatorAddr, approved.toString()]);
 
-   let tokenContractAddress = event.address.toHexString();
-   if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-      return;
-   }
+   // let tokenContractAddress = event.address.toHexString();
+   // if (!itemAddressArray.includes(tokenContractAddress)) {
+   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+   //    return;
+   // }
 
    let owner = findOrCreateUser(ownerAddr);
    let operator = findOrCreateUser(operatorAddr);
