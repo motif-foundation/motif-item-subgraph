@@ -120,12 +120,19 @@ export function handleTransfer(event: Transfer): void {
    log.info(`ITEM: PROCEEDING  : {}`,[tokenId]);
 
 
+
+   log.info(`ITEM: PROCEEDING 2  : {}`,[itemContract.itemIdentifier().toString()]);
+
+
  
-   if (itemContract.itemIdentifier() == null) {
-   	log.info(`ITEM: CANNOT GET itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
-      return;
-   } 
+   // if (itemContract.itemIdentifier() == null) {
+   // 	log.info(`ITEM: CANNOT GET itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
+   //    return;
+   // } 
    let itemIdentifier = itemContract.getItemIdentifier();  
+
+    log.info(`ITEM: PROCEEDING 3  : {}`,[itemIdentifier.toString()]);
+
    let itemIdentifierString = itemIdentifier.toString();
    log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
    if (itemIdentifierString != "8107") {
