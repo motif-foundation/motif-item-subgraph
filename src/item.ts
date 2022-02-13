@@ -7,8 +7,6 @@ import { createItem, createTransfer, createURIUpdate, fetchItemBidShares, findOr
 const CONTENT = "Content";
 const METADATA = "Metadata";
 
-var itemAddressArray = new Array<string>();
-itemAddressArray.push("0x4b60c6d01f2448e38026ef4830297d0dce008d09");
 
 /**
  * Handler called when the `TokenURIUpdated` Event is called on the Motif Contract
@@ -20,10 +18,7 @@ export function handleTokenURIUpdated(event: TokenURIUpdated): void {
    log.info(`Starting handler for TokenURIUpdated Event for tokenId: {}`, [tokenId]);
 
    let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-   //    return;
-   // }
+
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -64,10 +59,23 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
    log.info(`Starting handler for TokenMetadataURIUpdated Event for tokenId: {}`, [tokenId]);
 
    let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-   //    return;
-   // }
+
+
+   let itemContract = ItemContract.bind(event.address); 
+
+ 
+   let itemIdentifier = itemContract.getItemIdentifier();  
+   if (itemIdentifier == null) {
+   	log.info(`ITEM: cannot get itemIdentifierString, NOT PROCEEDING : {}`,[tokenId]);
+      return;
+   } 
+   let itemIdentifierString = itemIdentifier.toString();
+   log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
+   if (itemIdentifierString != "8107") {
+      log.info(`ITEM: itemIdentifierString not right, NOT PROCEEDING : {}`, [itemIdentifierString]);
+      return;
+   }  
+
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -265,10 +273,6 @@ function handleMint(event: Transfer): void {
 
    log.info(`ITEM: event.address: {}`, [event.address.toHexString()]);
 
-   let itemIdentifier = itemContract.getItemIdentifier();
-
-   log.info(`ITEM: itemIdentifier: {}`, [itemIdentifier.toString()]);
-
    let contentHash = itemContract.tokenContentHashes(tokenId);
    let metadataHash = itemContract.tokenMetadataHashes(tokenId);
 
@@ -280,15 +284,7 @@ function handleMint(event: Transfer): void {
    let token = tokenContractAddress.concat("-").concat(tokenId.toString());
 
    let itemExchangeAddress = itemContract.itemExchangeContract(); 
-
-   //let itemIdentifier = itemContract.itemIdentifier(); //DOESNT WORK!!!!!
-
-/*   if (itemIdentifier.toString() != "8107") {
-      log.info(`ITEM: identifier not right tokenId: {}`, [tokenId]);
-      return;
-   }
-*/
-
+ 
    let item = createItem(
       token,
       tokenId.toString(),
@@ -318,3 +314,14 @@ function handleMint(event: Transfer): void {
 
    createTransfer(transferId, event.transaction.hash.toHexString(), item, zeroUser, creator, event.block.timestamp, event.block.number);
 }
+
+
+
+// DO NOT DELETE
+// var itemAddressArray = new Array<string>();
+// itemAddressArray.push("0x4b60c6d01f2448e38026ef4830297d0dce008d09");
+// if (!itemAddressArray.includes(tokenContractAddress)) {
+//    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+//    return;
+// }
+
