@@ -61,30 +61,6 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
    let tokenContractAddress = event.address.toHexString();
 
 
-   let itemContract = ItemContract.bind(event.address); 
-
-   if (itemContract == null) {
-   	log.info(`ITEM: CANNOT DO ITEMCONTRACT, NOT PROCEEDING  : {}`,[tokenId]);
-      return;
-   } 
-
-   log.info(`ITEM: PROCEEDING  : {}`,[tokenId]);
-
-
- 
-   if (itemContract.itemIdentifier() == null) {
-   	log.info(`ITEM: CANNOT GET itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
-      return;
-   } 
-   let itemIdentifier = itemContract.getItemIdentifier();  
-   let itemIdentifierString = itemIdentifier.toString();
-   log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
-   if (itemIdentifierString != "8107") {
-      log.info(`ITEM: itemIdentifierString not right, NOT PROCEEDING : {}`, [itemIdentifierString]);
-      return;
-   }  
-
-
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
 
@@ -132,6 +108,30 @@ export function handleTransfer(event: Transfer): void {
 
  
 
+
+
+   let itemContract = ItemContract.bind(event.address); 
+
+   if (itemContract == null) {
+   	log.info(`ITEM: CANNOT DO ITEMCONTRACT, NOT PROCEEDING  : {}`,[tokenId]);
+      return;
+   } 
+
+   log.info(`ITEM: PROCEEDING  : {}`,[tokenId]);
+
+
+ 
+   if (itemContract.itemIdentifier() == null) {
+   	log.info(`ITEM: CANNOT GET itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
+      return;
+   } 
+   let itemIdentifier = itemContract.getItemIdentifier();  
+   let itemIdentifierString = itemIdentifier.toString();
+   log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
+   if (itemIdentifierString != "8107") {
+      log.info(`ITEM: itemIdentifierString not right, NOT PROCEEDING : {}`, [itemIdentifierString]);
+      return;
+   }  
 
 
 
