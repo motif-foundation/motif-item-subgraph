@@ -263,7 +263,11 @@ function handleMint(event: Transfer): void {
    let contentURI = itemContract.tokenURI(tokenId);
    let metadataURI = itemContract.tokenMetadataURI(tokenId);
 
-   //let itemIdentifier = itemContract.getItemIdentifier();
+   log.info(`ITEM: event.address: {}`, [event.address.toHexString()]);
+
+   let itemIdentifier = itemContract.getItemIdentifier();
+
+   log.info(`ITEM: itemIdentifier: {}`, [itemIdentifier.toString()]);
 
    let contentHash = itemContract.tokenContentHashes(tokenId);
    let metadataHash = itemContract.tokenMetadataHashes(tokenId);
