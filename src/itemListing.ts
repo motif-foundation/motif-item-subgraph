@@ -26,7 +26,7 @@ import { Item, ReserveListing } from "../types/schema";
 import { log } from "@graphprotocol/graph-ts";
 
 var itemAddressArray = new Array<string>();
-itemAddressArray.push("0x4b60c6d01f2448e38026ef4830297d0dce008d09");
+itemAddressArray.push("0x6db18f71a9adb38350482b55d7d24dc419b829d3");
 
 export function handleReserveListingCreated(event: ListingCreated): void {
    log.info(`Starting handler for ListingCreated for listing {}`, [event.params.listingId.toString()]);
@@ -36,10 +36,10 @@ export function handleReserveListingCreated(event: ListingCreated): void {
    let intermediary = findOrCreateUser(event.params.intermediary.toHexString());
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -74,10 +74,10 @@ export function handleReserveListingApprovalUpdate(event: ListingApprovalUpdated
    log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(id);
 
@@ -95,10 +95,10 @@ export function handleReserveListingDropApprovalUpdate(event: ListingDropApprova
    log.info(`Starting handler for ListingDropApprovalUpdate on listing {}`, [id]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(id);
 
@@ -118,10 +118,10 @@ export function handleReserveListingListPriceUpdate(event: ListingListPriceUpdat
    log.info(`Starting handler for ListingApprovalUpdate on listing {}`, [id]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(id);
 
@@ -136,10 +136,10 @@ export function handleReserveListingBid(event: ListingBid): void {
    log.info(`Starting handler for ListingBid on listing {}`, [listingId]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(listingId);
 
@@ -176,10 +176,10 @@ export function handleReserveListingDurationExtended(event: ListingDurationExten
    log.info(`Starting handler for ListingDurationExtended on listing {}`, [listingId]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(listingId);
 
@@ -198,10 +198,10 @@ export function handleReserveListingEnded(event: ListingEnded): void {
    log.info(`Starting handler for ListingEnd on listing {}`, [listingId]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(listingId);
 
@@ -224,10 +224,10 @@ export function handleReserveListingCanceled(event: ListingCanceled): void {
    log.info(`Starting handler for ListingCanceled on listing {}`, [listingId]);
 
    let tokenContractAddress = event.params.tokenContract.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let listing = ReserveListing.load(listingId);
 

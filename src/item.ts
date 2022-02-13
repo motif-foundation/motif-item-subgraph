@@ -7,6 +7,9 @@ import { createItem, createTransfer, createURIUpdate, fetchItemBidShares, findOr
 const CONTENT = "Content";
 const METADATA = "Metadata";
 
+var itemAddressArray = new Array<string>();
+itemAddressArray.push("0x6db18f71a9adb38350482b55d7d24dc419b829d3");
+
 
 /**
  * Handler called when the `TokenURIUpdated` Event is called on the Motif Contract
@@ -100,55 +103,35 @@ export function handleTransfer(event: Transfer): void {
    let tokenId = event.params.tokenId.toString();
 
    log.info(`ITEM: Starting handler for Transfer Event of tokenId: {}, from: {}. to: {}`, [tokenId, fromAddr, toAddr]);
- 
-
-   //let itemPermitTypeHash = itemContract.PERMIT_TYPEHASH();
-
-   //log.info(`ITEM: PERMIT_TYPEHASH: {} -> not proceeding`, [itemPermitTypeHash.toHexString()]);
-
- 
-
-
-
-   let itemContract = ItemContract.bind(event.address); 
-
-   if (itemContract == null) {
+  
+   /*  
+	let itemContract = ItemContract.bind(event.address); 
+	let itemIdentifier = itemContract.getItemIdentifier();   
+ 	if (itemContract.itemIdentifier().toString() == null) { //dont work
    	log.info(`ITEM: CANNOT DO ITEMCONTRACT, NOT PROCEEDING  : {}`,[tokenId]);
       return;
    } 
-
-   log.info(`ITEM: PROCEEDING  : {}`,[tokenId]);
-
-
- 
-
- 
-   // if (itemContract.itemIdentifier() == null) {
-   // 	log.info(`ITEM: CANNOT GET itemIdentifierString, NOT PROCEEDING  : {}`,[tokenId]);
-   //    return;
-   // } 
-   let itemIdentifier = itemContract.getItemIdentifier();  
-
-    log.info(`ITEM: PROCEEDING 3  : {}`,[itemIdentifier.toString()]);
-
+   if (itemIdentifier.toString() == null) {  //dont work
+   	log.info(`ITEM: CANNOT DO ITEMCONTRACT, NOT PROCEEDING  : {}`,[tokenId]);
+      return;
+   }  
+ 	
    let itemIdentifierString = itemIdentifier.toString();
    log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
    if (itemIdentifierString != "8107") {
       log.info(`ITEM: itemIdentifierString not right, NOT PROCEEDING : {}`, [itemIdentifierString]);
       return;
-   }  
-
-
-
-   //let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-   //    return;
-   // }
-
-
-   // let itemContract = ItemContract.bind(event.address);
+   } 
+   */  
+  
    let tokenContractAddress = event.address.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
+ 
+   // let itemContract = ItemContract.bind(event.address);
+   //let tokenContractAddress = event.address.toHexString();
    // let itemExchangeAddress = itemContract.itemExchangeContract();
    // let itemIdentifier = itemContract.itemIdentifier(); 
 
@@ -202,10 +185,10 @@ export function handleApproval(event: Approval): void {
    log.info(`Starting handler for Approval Event of tokenId: {}, owner: {}, approved: {}`, [tokenId, ownerAddr, approvedAddr]);
 
    let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
@@ -238,10 +221,10 @@ export function handleApprovalForAll(event: ApprovalForAll): void {
    log.info(`Starting handler for ApprovalForAll Event for owner: {}, operator: {}, approved: {}`, [ownerAddr, operatorAddr, approved.toString()]);
 
    let tokenContractAddress = event.address.toHexString();
-   // if (!itemAddressArray.includes(tokenContractAddress)) {
-   //    log.info(`tokenContractAddress: {} is not Item -> not proceeding`, [tokenContractAddress]);
-   //    return;
-   // }
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`tokenContractAddress: {} is not Item for -> not proceeding`, [tokenContractAddress]);
+      return;
+   }
 
    let owner = findOrCreateUser(ownerAddr);
    let operator = findOrCreateUser(operatorAddr);
