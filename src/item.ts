@@ -120,9 +120,7 @@ export function handleTransfer(event: Transfer): void {
    log.info(`ITEM: PROCEEDING  : {}`,[tokenId]);
 
 
-
-   log.info(`ITEM: PROCEEDING 2  : {}`,[itemContract.itemIdentifier().toString()]);
-
+ 
 
  
    // if (itemContract.itemIdentifier() == null) {
