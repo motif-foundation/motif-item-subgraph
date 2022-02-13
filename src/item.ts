@@ -63,10 +63,11 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
 
    let itemContract = ItemContract.bind(event.address); 
  
-   if (itemContract.itemIdentifier == null) {
+   if (itemContract.itemIdentifier() == null) {
    	log.info(`ITEM: cannot get itemIdentifierString, NOT PROCEEDING : {}`,[tokenId]);
       return;
    } 
+   let itemIdentifier = itemContract.getItemIdentifier();  
    let itemIdentifierString = itemIdentifier.toString();
    log.info(`ITEM: itemIdentifierString: {}`, [itemIdentifierString]); 
    if (itemIdentifierString != "8107") {
