@@ -8,7 +8,7 @@ const CONTENT = "Content";
 const METADATA = "Metadata";
 
 var itemAddressArray = new Array<string>();
-itemAddressArray.push("0x6db18f71a9adb38350482b55d7d24dc419b829d3");
+itemAddressArray.push("0x040e39654ef3b81c79176c9d398c8c5a938b1d1a");
 
 
 /**
