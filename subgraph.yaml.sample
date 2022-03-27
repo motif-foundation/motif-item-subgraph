@@ -1,15 +1,15 @@
 specVersion: 0.0.3
 description: Motif Item Subgraph
-repository: https://github.com/motifdev/motif-item-subgraph
+repository: https://github.com/motif-foundation/motif-item-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Item
     network: motif
-    source: 
+    source:   
       abi: Item
-      startBlock: 67295
+      startBlock: 720
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -36,9 +36,9 @@ dataSources:
   - kind: ethereum/contract
     name: ItemExchange
     network: motif
-    source: 
+    source:    
       abi: ItemExchange
-      startBlock: 67295
+      startBlock: 720
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -72,10 +72,9 @@ dataSources:
   - kind: ethereum/contract
     name: ItemListing
     network: motif
-    source:
-      address: "0x2d193A6444E3028325704f80C491656fAd9f345A"
+    source:   
       abi: ItemListing
-      startBlock: 67295
+      startBlock: 720
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -111,3 +110,4 @@ dataSources:
         - event: ListingCanceled(indexed uint256,indexed uint256,indexed address,address)
           handler: handleReserveListingCanceled
       file: ./src/itemListing.ts
+
