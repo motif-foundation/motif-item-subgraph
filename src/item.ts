@@ -24,9 +24,7 @@ export function handleTokenURIUpdated(event: TokenURIUpdated): void {
    if (!itemAddressArray.includes(tokenContractAddress)) {
       log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
       return;
-   }
-
-   let tokenContractAddress = event.address.toHexString();
+   } 
 
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
@@ -72,11 +70,7 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
       log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
       return;
    }
-
-
-   let tokenContractAddress = event.address.toHexString();
-
-
+ 
    let token = tokenContractAddress.concat("-").concat(tokenId);
    let item = Item.load(token);
 
@@ -285,7 +279,7 @@ function handleMint(event: Transfer): void {
 
    let tokenContractAddress = event.address.toHexString();
    if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`);
       return;
    }
    
@@ -297,7 +291,7 @@ function handleMint(event: Transfer): void {
 
    let bidShares = fetchItemBidShares(tokenId, event.address);
 
-   let tokenContractAddress = event.address.toHexString();
+ 
    let token = tokenContractAddress.concat("-").concat(tokenId.toString());
 
    let itemExchangeAddress = itemContract.itemExchangeContract(); 
