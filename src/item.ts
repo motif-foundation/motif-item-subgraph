@@ -21,6 +21,12 @@ export function handleTokenURIUpdated(event: TokenURIUpdated): void {
    log.info(`Starting handler for TokenURIUpdated Event for tokenId: {}`, [tokenId]);
 
    let tokenContractAddress = event.address.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
+
+   let tokenContractAddress = event.address.toHexString();
 
 
    let token = tokenContractAddress.concat("-").concat(tokenId);
@@ -60,6 +66,13 @@ export function handleTokenMetadataURIUpdated(event: TokenMetadataURIUpdated): v
    let tokenId = event.params._tokenId.toString();
 
    log.info(`Starting handler for TokenMetadataURIUpdated Event for tokenId: {}`, [tokenId]);
+
+   let tokenContractAddress = event.address.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
+
 
    let tokenContractAddress = event.address.toHexString();
 
@@ -268,6 +281,14 @@ function handleMint(event: Transfer): void {
    let metadataURI = itemContract.tokenMetadataURI(tokenId);
 
    log.info(`ITEM: event.address: {}`, [event.address.toHexString()]);
+
+
+   let tokenContractAddress = event.address.toHexString();
+   if (!itemAddressArray.includes(tokenContractAddress)) {
+      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`, [tokenContractAddress, tokenId]);
+      return;
+   }
+   
 
    let contentHash = itemContract.tokenContentHashes(tokenId);
    let metadataHash = itemContract.tokenMetadataHashes(tokenId);
