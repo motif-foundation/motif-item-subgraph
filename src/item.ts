@@ -279,7 +279,7 @@ function handleMint(event: Transfer): void {
 
    let tokenContractAddress = event.address.toHexString();
    if (!itemAddressArray.includes(tokenContractAddress)) {
-      log.info(`ITEM: tokenContractAddress: {} is not Item for token: {} -> not proceeding`);
+      log.info(`tokenContractAddress: {} is not Item for -> not proceeding`, [tokenContractAddress]);
       return;
    }
    
