@@ -26,7 +26,7 @@ import { Item, ReserveListing } from "../types/schema";
 import { log } from "@graphprotocol/graph-ts";
 
 var itemAddressArray = new Array<string>();
-itemAddressArray.push("0xe6445f2282e050ed619cbc1b800e7673c9f5e859");
+itemAddressArray.push("0xE66d6BFef4D0125b237db8fBD1210fC9b18D72Af");
 
 export function handleReserveListingCreated(event: ListingCreated): void {
    log.info(`Starting handler for ListingCreated for listing {}`, [event.params.listingId.toString()]);
