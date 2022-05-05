@@ -23,7 +23,7 @@ const REMOVED = 'Removed'
 const FINALIZED = 'Finalized'
  
 var itemExchangeAddressArray = new Array<string>();
-itemExchangeAddressArray.push("0xc2975685ae4C31cB88B36A5c6CAC423Dc8aD17Ce");
+itemExchangeAddressArray.push("0xc2975685ae4c31cb88b36a5c6cac423dc8ad17ce");
 
  
 /**
