@@ -29,8 +29,8 @@
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.18.0",
     "@graphprotocol/graph-ts": "^0.18.0",
-    "@motif-foundation/asset": "^1.0.21",
-    "@motif-foundation/listing": "^1.0.26",
-    "@motif-foundation/sdk": "^1.0.60"
+    "@motif-foundation/asset": "^1.0.22",
+    "@motif-foundation/listing": "^1.0.28",
+    "@motif-foundation/sdk": "^1.0.62"
   }
 }
