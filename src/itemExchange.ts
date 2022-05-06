@@ -22,10 +22,10 @@ import {
 const REMOVED = 'Removed'
 const FINALIZED = 'Finalized'
  
-var itemExchangeAddressArray = new Array<string>();
+/*var itemExchangeAddressArray = new Array<string>();
 itemExchangeAddressArray.push("0xc2975685ae4c31cb88b36a5c6cac423dc8ad17ce");
 
- 
+ */
 /**
  * Handler called when a `BidShareUpdated` Event is emitted on the Motif ItemExchange Contract
  * @param event
@@ -36,16 +36,15 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
   
   log.info(`ITEMEXCHANGE: Starting handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
     tokenId,
-    bidShares.toString()
-    
+    bidShares.toString() 
   ])
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+/*   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
    }
-
+*/
   let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
    
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
@@ -75,10 +74,10 @@ export function handleAskCreated(event: AskCreated): void {
   let onchainAsk = event.params.ask
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+ /*  if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
-   }
+   }*/
 
 
   log.info(`Starting handler for AskCreated Event for tokenId: {}, ask: {}`, [
@@ -154,10 +153,10 @@ export function handleAskRemoved(event: AskRemoved): void {
   let askId: string
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+/*   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
-   }
+   }*/
 
   log.info(`Starting handler for AskRemoved Event for tokenId: {}`, [tokenId])
 
@@ -224,11 +223,11 @@ export function handleBidCreated(event: BidCreated): void {
   let tokenId = event.params.tokenId.toString()
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+  /* if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
    }
-
+*/
   let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
   let item = Item.load(token)
@@ -282,10 +281,10 @@ export function handleBidRemoved(event: BidRemoved): void {
   let tokenId = event.params.tokenId.toString()
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+ /*  if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
-   }
+   }*/
  
   let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
@@ -355,10 +354,10 @@ export function handleBidFinalized(event: BidFinalized): void {
   let tokenId = event.params.tokenId.toString()
 
    let tokenExchangeContractAddress = event.address.toHexString()
-   if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
+  /* if (!itemExchangeAddressArray.includes(tokenExchangeContractAddress)) {
       log.info(`tokenExchangeContractAddress: {} is not ItemExchange for token: {} -> not proceeding`, [tokenExchangeContractAddress, tokenId]);
       return;
-   }
+   }*/
   
   let tokenContractAddress = fetchItemAddress(event.params.tokenId,event.address) 
   let token = tokenContractAddress.concat('-').concat(tokenId.toString())  
