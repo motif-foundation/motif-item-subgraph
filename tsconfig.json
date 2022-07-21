@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "strictNullChecks": false,
     "noLib": false,
     "lib": [
       "es2016",
@@ -15,7 +16,7 @@
     "allowJs": true,
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true, 
     "allowSyntheticDefaultImports": true,
     "outDir": "dist"
   },
