@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Item
-    network: motif
+    network: matic
     source:   
       address: "0xE1De4B9dc73bb169Eb6c3f05b22D1EE307c31548"
       abi: Item
@@ -36,7 +36,7 @@ dataSources:
       file: ./src/item.ts
   - kind: ethereum/contract
     name: ItemExchange
-    network: motif
+    network: matic
     source:   
       address: "0xCe254547B47dA2dFe638e76662BD34AD72ee91ea" 
       abi: ItemExchange
@@ -73,7 +73,7 @@ dataSources:
       file: ./src/itemExchange.ts
   - kind: ethereum/contract
     name: ItemListing
-    network: motif
+    network: matic
     source:  
       address: "0x0fd64b59Ec121cDF370dc62017CB98Cb6E6E356D" 
       abi: ItemListing
