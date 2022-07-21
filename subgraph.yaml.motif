@@ -1,0 +1,116 @@
+specVersion: 0.0.3
+description: Motif Item Subgraph
+repository: https://github.com/motif-foundation/motif-item-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Item
+    network: motif
+    source:   
+      address: "0x035A9Dd55a52C741c5E6E8fEb77B3ce121234Db3"
+      abi: Item
+      startBlock: 8110
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Item
+      abis:
+        - name: Item
+          file: ./abis/Item.json
+        - name: ItemExchange
+          file: ./abis/ItemExchange.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: TokenURIUpdated(indexed uint256,address,string)
+          handler: handleTokenURIUpdated
+        - event: TokenMetadataURIUpdated(indexed uint256,address,string)
+          handler: handleTokenMetadataURIUpdated
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+      file: ./src/item.ts
+  - kind: ethereum/contract
+    name: ItemExchange
+    network: motif
+    source:   
+      address: "0x04ae93fa54b2d3A40d60880d5908275D653Bf589" 
+      abi: ItemExchange
+      startBlock: 8110
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Ask
+        - Bid
+      abis:
+        - name: ItemExchange
+          file: ./abis/ItemExchange.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: BidShareUpdated(indexed uint256,((uint256),(uint256),(uint256)))
+          handler: handleBidShareUpdated
+        - event: AskCreated(indexed uint256,(uint256,address))
+          handler: handleAskCreated
+        - event: AskRemoved(indexed uint256,(uint256,address))
+          handler: handleAskRemoved
+        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidCreated
+        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidRemoved
+        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256)))
+          handler: handleBidFinalized
+      file: ./src/itemExchange.ts
+  - kind: ethereum/contract
+    name: ItemListing
+    network: motif
+    source:  
+      address: "0xF18fac27AeDD4AFAF2913878048E0B5534719766" 
+      abi: ItemListing
+      startBlock: 8110
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ReserveListing
+        - ReserveListingBid
+        - InactiveReserveListingBid
+      abis:
+        - name: ItemListing
+          file: ./abis/ItemListing.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: ListingCreated(indexed uint256,indexed uint256,indexed address,uint256,uint256,uint256,uint8,address,address,uint8,address) 
+          handler: handleReserveListingCreated
+        - event: ListingApprovalUpdated(indexed uint256,indexed uint256,indexed address,bool)
+          handler: handleReserveListingApprovalUpdate
+        - event: ListingDropApprovalUpdated(indexed uint256,indexed uint256,indexed address,bool,uint256)
+          handler: handleReserveListingDropApprovalUpdate 
+        - event: ListingListPriceUpdated(indexed uint256,indexed uint256,indexed address,uint256)
+          handler: handleReserveListingListPriceUpdate
+        - event: ListingBid(indexed uint256,indexed uint256,indexed address,address,uint256,bool,bool)
+          handler: handleReserveListingBid
+        - event: ListingDurationExtended(indexed uint256,indexed uint256,indexed address,uint256)
+          handler: handleReserveListingDurationExtended
+        - event: ListingEnded(indexed uint256,indexed uint256,indexed address,address,address,address,uint256,uint256,address)
+          handler: handleReserveListingEnded
+        - event: ListingCanceled(indexed uint256,indexed uint256,indexed address,address)
+          handler: handleReserveListingCanceled
+      file: ./src/itemListing.ts
+
