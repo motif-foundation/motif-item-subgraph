@@ -4,13 +4,13 @@
   "scripts": {
     "create-graph": "graph create motif-foundation/motif-item-subgraph --node https://api.thegraph.com/deploy/",
     "create-local": "graph create motif-foundation/motif-item-subgraph --node http://127.0.0.1:8020",
-    "create-local-polygon": "graph create motif-foundation/motif-item-subgraph --node http://127.0.0.1:8021",
+    "create-local-polygon": "graph create motif-foundation/motif-item-subgraph --node http://127.0.0.1:8025",
     "codegen": "graph codegen --output-dir types",
     "build": "graph build",
     "deploy": "graph deploy motif-foundation/motif-item-subgraph --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-polygonDOESNTWORKNEEDSCLI22": "graph deploy motif-foundation/motif-item-polygon --product hosted-service",
     "deploy-local": "graph deploy motif-foundation/motif-item-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "deploy-polygon": "graph deploy motif-foundation/motif-item-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8021"
+    "deploy-polygon": "graph deploy motif-foundation/motif-item-subgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8025"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.0.16",
