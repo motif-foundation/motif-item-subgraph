@@ -6,10 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Item
-    network: motif
+    network: motiftest
     source:   
+      address: "0xd86fBBD4D2d4d6Ef3059AA4baFAf32C5c677681B"
       abi: Item
-      startBlock: 720
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -35,10 +36,11 @@ dataSources:
       file: ./src/item.ts
   - kind: ethereum/contract
     name: ItemExchange
-    network: motif
-    source:    
+    network: motiftest
+    source:   
+      address: "0xcd378C9B9cfD39fE9184B87C486394a107708f06" 
       abi: ItemExchange
-      startBlock: 720
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -71,10 +73,11 @@ dataSources:
       file: ./src/itemExchange.ts
   - kind: ethereum/contract
     name: ItemListing
-    network: motif
-    source:   
+    network: motiftest
+    source:  
+      address: "0x32803806091EB95388B6Bc27965697a321e6F668" 
       abi: ItemListing
-      startBlock: 720
+      startBlock: 1
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
