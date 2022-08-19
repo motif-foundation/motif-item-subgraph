@@ -8,9 +8,9 @@ dataSources:
     name: Item
     network: motif
     source:   
-      address: "0xA9c46403d94519259797fd8712Ee680fdf39bBe1"
+      address: "0x42103F253514D64402ff740fb65d61E7fe287a41"
       abi: Item
-      startBlock: 1
+      startBlock: 812
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -38,9 +38,9 @@ dataSources:
     name: ItemExchange
     network: motif
     source:   
-      address: "0xaDb208601aa8Bb4CE505e28CbAa600cC2e3FBCB2" 
+      address: "0xf5FA77270f8Aa5fbd8951Ec9c2D455d34D473fa0" 
       abi: ItemExchange
-      startBlock: 1
+      startBlock: 812
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -75,9 +75,9 @@ dataSources:
     name: ItemListing
     network: motif
     source:  
-      address: "0x7DeFAD3683087daE5126c12a7b6445d523d8DAb6" 
+      address: "0x0B869702D51A7b5c273b62F32340fFEDECcd970D" 
       abi: ItemListing
-      startBlock: 1
+      startBlock: 812
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
