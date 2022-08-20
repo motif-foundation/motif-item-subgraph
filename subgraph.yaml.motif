@@ -8,7 +8,7 @@ dataSources:
     name: Item
     network: motif
     source:   
-      address: "0xc96aDd8D635F982BD4DFD57c70eF87a967FC00F5"
+      address: "0xF8B623C8AFB2cc68240c449BC075467eFe4dad85"
       abi: Item
       startBlock: 1
     mapping:
@@ -38,7 +38,7 @@ dataSources:
     name: ItemExchange
     network: motif
     source:   
-      address: "0xf5948Ce0289d8BdA0201C4DF671ce47Ae4b44e96" 
+      address: "0xf4d23dF751e26D312Abc313146dE98A26f46D480" 
       abi: ItemExchange
       startBlock: 1
     mapping:
@@ -75,7 +75,7 @@ dataSources:
     name: ItemListing
     network: motif
     source:  
-      address: "0xC36B303Aa48F4B814d2c846Fd5678459fC78a45A" 
+      address: "0xBfA22D5C7E106f1a5A9DFbF7E5F7c0eD68182bab" 
       abi: ItemListing
       startBlock: 1
     mapping:
