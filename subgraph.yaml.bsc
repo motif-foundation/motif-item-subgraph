@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Item
-    network: matic
+    network: bsc
     source:   
-      address: "0xE1De4B9dc73bb169Eb6c3f05b22D1EE307c31548"
+      address: "0xDbd6DB3783bc3Ddd8B5395ff10a638614881Ddbc"
       abi: Item
-      startBlock: 32963034
+      startBlock: 21234089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -36,11 +36,11 @@ dataSources:
       file: ./src/item.ts
   - kind: ethereum/contract
     name: ItemExchange
-    network: matic
+    network: bsc
     source:   
-      address: "0xCe254547B47dA2dFe638e76662BD34AD72ee91ea" 
+      address: "0xAC47253FA480Ab0A364fD869eFC8B1412f1B9778" 
       abi: ItemExchange
-      startBlock: 32963034
+      startBlock: 21234089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -73,11 +73,11 @@ dataSources:
       file: ./src/itemExchange.ts
   - kind: ethereum/contract
     name: ItemListing
-    network: matic
+    network: bsc
     source:  
-      address: "0xa84aD8fef974a9f944f381AfE3139e55166C889b" 
+      address: "0x0948Ada022F022Cd78A8245651e5574586A45AC8" 
       abi: ItemListing
-      startBlock: 32963034
+      startBlock: 21234089
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
