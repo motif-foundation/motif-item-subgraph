@@ -75,7 +75,7 @@ dataSources:
     name: ItemListing
     network: motiftest
     source:  
-      address: "0xFBBe5e4225ED43b4923c8D5dF70d0B159C975Ca3" 
+      address: "0x98B6E21a6954A3B6f230DAcC65F944bC8e048dE7" 
       abi: ItemListing
       startBlock: 7742
     mapping:
