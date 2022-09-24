@@ -10,7 +10,7 @@ dataSources:
     source:   
       address: "0x3553268e022b01EbdE89A9808a3f19304A213826"
       abi: Item
-      startBlock: 15525907
+      startBlock: 15554744
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -40,7 +40,7 @@ dataSources:
     source:   
       address: "0xDbd6DB3783bc3Ddd8B5395ff10a638614881Ddbc" 
       abi: ItemExchange
-      startBlock: 15525907
+      startBlock: 15554744
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -77,7 +77,7 @@ dataSources:
     source:  
       address: "0x9Dc6AeF46d70E84Ee20a32fA97881B0Ac3c94709" 
       abi: ItemListing
-      startBlock: 15525907
+      startBlock: 15554744
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
